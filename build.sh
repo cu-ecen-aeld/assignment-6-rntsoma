@@ -14,6 +14,7 @@ CONFLINE="MACHINE = \"qemuarm64\""
 cat conf/local.conf | grep "${CONFLINE}" > /dev/null
 local_conf_info=$?
 
+bitbake world -c cleanall --continue
 if [ $local_conf_info -ne 0 ];then
 	echo "Append ${CONFLINE} in the local.conf file"
 	echo ${CONFLINE} >> conf/local.conf
@@ -21,7 +22,6 @@ if [ $local_conf_info -ne 0 ];then
 else
 	echo "${CONFLINE} already exists in the local.conf file"
 fi
-
 
 bitbake-layers show-layers | grep "meta-aesd" > /dev/null
 layer_info=$?
